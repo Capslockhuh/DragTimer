@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Set timer for \(Int(timerValue))")
+                Text("Set timer for \(Int(timerValue)) seconds")
                     .padding(5)
                     .font(.title)
                     .background(.blue)
@@ -54,7 +54,7 @@ struct ContentView: View {
     
     func scheduleNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "Your timer for \(Int(timerValue))"
+        content.title = "Your timer for \(Int(timerValue)) seconds"
         content.sound = UNNotificationSound.default
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timerValue, repeats: false)
