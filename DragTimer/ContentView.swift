@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var dragAmount = CGSize.zero
     @State private var timerValue = 0.0
     let timer = Timer.publish(every: 1, on: .main, in: .common)
+    @State private var showingWelcomeView = false
+    @State private var notificationPermission = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -54,7 +56,11 @@ struct ContentView: View {
             )
         }
         .onAppear() {
-            askForNotificationPermission()
+            showingWelcomeView = true
+        }
+        
+        .sheet(isPresented: $showingWelcomeView) {
+            WelcomeView(function: askForNotificationPermission())
         }
         
         .onReceive(timer) { time in
@@ -68,8 +74,10 @@ struct ContentView: View {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 print("Permission accepted")
+                notificationPermission = true
             } else if let error = error {
                 print(error.localizedDescription)
+                notificationPermission = false
             }
         }
     }
