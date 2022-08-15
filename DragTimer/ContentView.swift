@@ -14,16 +14,23 @@ struct ContentView: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common)
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Set timer for \(Int(timerValue)) seconds")
-                    .padding(5)
-                    .font(.title)
-                    .background(.blue)
-                    .offset(dragAmount)
-                    .animation(.default, value: dragAmount)
-                    .onTapGesture(count: 2) {
-                        timerValue = 0
-                    }
+            ZStack {
+                RadialGradient(colors: [.blue, .mint], center: .top, startRadius: 200, endRadius: 400)
+                    .ignoresSafeArea()
+                VStack {
+                    Text("Set timer for \(Int(timerValue)) seconds")
+                        .padding(5)
+                        .font(.title)
+                        .background(.blue)
+                        .offset(dragAmount)
+                        .animation(.default, value: dragAmount)
+                        .onTapGesture(count: 2) {
+                            timerValue = 0
+                        }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 280)
+                .background(.thinMaterial)
             }
             .gesture(
                 DragGesture()
