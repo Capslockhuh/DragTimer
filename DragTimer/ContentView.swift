@@ -14,6 +14,7 @@ struct ContentView: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common)
     @State private var showingWelcomeView = false
     @State private var notificationPermission = false
+    @State private var draggingDisabled = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -56,9 +57,11 @@ struct ContentView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                             timer.connect()
                             scheduleNotification()
+                            draggingDisabled = true
                         }
                     }
             )
+            .disabled(draggingDisabled)
         }
         .onAppear() {
             showingWelcomeView = true
@@ -71,6 +74,8 @@ struct ContentView: View {
         .onReceive(timer) { time in
             if timerValue > 0 {
                 timerValue -= 1
+            } else {
+                draggingDisabled = false
             }
         }
     }
