@@ -17,11 +17,17 @@ struct ContentView: View {
             ZStack {
                 RadialGradient(colors: [.blue, .mint], center: .top, startRadius: 200, endRadius: 400)
                     .ignoresSafeArea()
+                Circle()
+                    .scaleEffect(dragAmount.height / 250)
+                    .foregroundColor(.green)
                 VStack {
                     Text("Set timer for \(Int(timerValue)) seconds")
                         .padding(5)
                         .font(.title)
                         .background(.blue)
+                        .opacity(0.85)
+                        .cornerRadius(15.0)
+                        .padding(10)
                         .offset(dragAmount)
                         .animation(.default, value: dragAmount)
                         .onTapGesture(count: 2) {
