@@ -10,6 +10,7 @@ import UserNotifications
 
 struct WelcomeView: View {
     let function: Void
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationView {
             VStack {
@@ -18,7 +19,17 @@ struct WelcomeView: View {
                 
                 Text("How to navigate: \n - drag the box to increase the timer \n - double tap the box to reset the timer")
                     .font(.title3)
+
+                Button("Got it!") {
+                    dismiss()
+                }
+                .buttonStyle(.bordered)
+                .padding(10)
+                .tint(.blue)
+                .cornerRadius(15.0)
+                
                 Spacer()
+                
                 NavigationLink {
                    Text("h")
                 } label: {
@@ -28,6 +39,7 @@ struct WelcomeView: View {
                         .background(.blue)
                         .cornerRadius(15.0)
                 }
+                
                 Spacer()
                 Spacer()
             }
