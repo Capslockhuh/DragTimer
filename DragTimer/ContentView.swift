@@ -25,11 +25,14 @@ struct ContentView: View {
                         .scale(0.5)
                         .foregroundColor(.secondary)
                     
+                    Image(systemName: "circle.fill")
+                        .foregroundColor(.white)
+                    
                     Text("Set timer for \(Int(timerValue)) seconds")
                         .padding(5)
                         .font(.title)
                         .background(.blue)
-                        .opacity(0.85)
+                        //.opacity(0.85)
                         .cornerRadius(15.0)
                         .padding(10)
                         .offset(dragAmount)
