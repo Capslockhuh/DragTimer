@@ -21,13 +21,16 @@ struct ContentView: View {
                     .background(.blue)
                     .offset(dragAmount)
                     .animation(.default, value: dragAmount)
+                    .onTapGesture(count: 2) {
+                        timerValue = 0
+                    }
             }
             .gesture(
                 DragGesture()
                     .onChanged { dragAmount = $0.translation
                         print(dragAmount)
                         timerValue += 0.5
-                    }
+                        }
                     .onEnded { _ in
                         dragAmount = .zero
                         timer.connect()
@@ -36,18 +39,22 @@ struct ContentView: View {
             )
         }
         .onAppear() {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                if success {
-                    print("Permission accepted")
-                } else if let error = error {
-                    print(error.localizedDescription)
-                }
-            }
+            askForNotificationPermission()
         }
         
         .onReceive(timer) { time in
             if timerValue > 0 {
                 timerValue -= 1
+            }
+        }
+    }
+    
+    func askForNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("Permission accepted")
+            } else if let error = error {
+                print(error.localizedDescription)
             }
         }
     }
