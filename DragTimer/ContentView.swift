@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     @State private var dragAmount = CGSize.zero
@@ -30,14 +31,37 @@ struct ContentView: View {
                     .onEnded { _ in
                         dragAmount = .zero
                         timer.connect()
+                        scheduleNotification()
                     }
             )
         }
+        .onAppear() {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                if success {
+                    print("Permission accepted")
+                } else if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
         .onReceive(timer) { time in
             if timerValue > 0 {
                 timerValue -= 1
             }
         }
+    }
+    
+    func scheduleNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Your timer for \(Int(timerValue))"
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timerValue, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request)
     }
 }
 
