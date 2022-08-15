@@ -53,8 +53,10 @@ struct ContentView: View {
                         }
                     .onEnded { _ in
                         dragAmount = .zero
-                        timer.connect()
-                        scheduleNotification()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                            timer.connect()
+                            scheduleNotification()
+                        }
                     }
             )
         }
