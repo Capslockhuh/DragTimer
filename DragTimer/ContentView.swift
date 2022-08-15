@@ -17,10 +17,12 @@ struct ContentView: View {
             ZStack {
                 RadialGradient(colors: [.blue, .mint], center: .top, startRadius: 200, endRadius: 400)
                     .ignoresSafeArea()
-                Circle()
-                    .scaleEffect(dragAmount.height / 250)
-                    .foregroundColor(.green)
-                VStack {
+                
+                ZStack {
+                    Circle()
+                        .scale(0.5)
+                        .foregroundColor(.secondary)
+                    
                     Text("Set timer for \(Int(timerValue)) seconds")
                         .padding(5)
                         .font(.title)
