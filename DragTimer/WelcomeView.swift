@@ -31,7 +31,7 @@ struct WelcomeView: View {
                 Spacer()
                 
                 NavigationLink {
-                   Text("h")
+                   AboutView()
                 } label: {
                     Text("Find out more about this app")
                         .foregroundColor(.black)
@@ -40,6 +40,7 @@ struct WelcomeView: View {
                         .cornerRadius(15.0)
                 }
                 
+                Spacer()
                 Spacer()
                 Spacer()
             }
