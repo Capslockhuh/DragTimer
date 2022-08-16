@@ -8,8 +8,6 @@
 import SwiftUI
 import UserNotifications
 
-//TODO: add a toolbar button
-
 struct ContentView: View {
     @State private var dragAmount = CGSize.zero
     @State private var timerValue = 0.0
@@ -40,9 +38,6 @@ struct ContentView: View {
                         .padding(10)
                         .offset(dragAmount)
                         .animation(.default, value: dragAmount)
-                        .onTapGesture(count: 2) {
-                            timerValue = 0
-                        }
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 280)
@@ -65,6 +60,10 @@ struct ContentView: View {
             )
             .disabled(draggingDisabled)
         }
+        .onTapGesture(count: 2) {
+            timerValue = 0
+        }
+        
         .onAppear() {
             showingWelcomeView = true
         }
